@@ -12,8 +12,8 @@ class TestBoard(unittest.TestCase):
 
         random_row = random.randint(0, num_rows-1)
 
-        self.assertEqual(actual.board_state.__len__(), num_rows)
-        self.assertEqual(actual.board_state[random_row].__len__(), num_cols)
+        self.assertEqual(len(actual.board_state), num_rows)
+        self.assertEqual(len(actual.board_state[random_row]), num_cols)
         
         random_col = random.randint(0, num_cols-1)
         self.assertEqual(type(actual.board_state[random_row][random_col]), PlayerPiece)

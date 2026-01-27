@@ -59,8 +59,8 @@ class Board:
             for check in (
                 self._verify_vertical_win,
                 self._verify_horizontal_win,
-                self._verify_diag1_win,
-                self._verify_diag2_win,
+                self._verify_diag_1_win,
+                self._verify_diag_2_win,
             )
         )
 
@@ -84,9 +84,43 @@ class Board:
             window = [self.board_state[c][row] for c in range(i, i + WINDOW_SIZE)]
             if all(piece == player for piece in window):
                 return True
+        
+        return False
 
-    def _verify_diag1_win(self, last_move: tuple[int, int]) -> bool:
-        return False  # PLACEHOLDER
+    def _verify_diag_1_win(self, last_move: tuple[int, int]) -> bool:
+        column, row = last_move
+        player = self.board_state[column][row]
+        WINDOW_SIZE = 4
 
-    def _verify_diag2_win(self, last_move: tuple[int, int]) -> bool:
-        return False  # PLACEHOLDER
+        for i in range(WINDOW_SIZE):
+            start_column = column - i
+            start_row = row - i
+
+            coords = [(start_column + j, start_row + j) for j in range(WINDOW_SIZE)]
+
+            if all(
+                0 <= c < self.num_cols and 0 <= r < self.num_rows for c, r in coords
+            ):
+                window_values = [self.board_state[c][r] for c, r in coords]
+                if all(piece == player for piece in window_values):
+                    return True
+        return False
+
+    def _verify_diag_2_win(self, last_move: tuple[int, int]) -> bool:
+        column, row = last_move
+        player = self.board_state[column][row]
+        WINDOW_SIZE = 4
+
+        for i in range(WINDOW_SIZE):
+            start_column = column - i
+            start_row = row + i
+
+            coords = [(start_column + j, start_row - j) for j in range(WINDOW_SIZE)]
+
+            if all(
+                0 <= c < self.num_cols and 0 <= r < self.num_rows for c, r in coords
+            ):
+                window_values = [self.board_state[c][r] for c, r in coords]
+                if all(piece == player for piece in window_values):
+                    return True
+        return False

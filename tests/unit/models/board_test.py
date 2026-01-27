@@ -68,15 +68,16 @@ def test_add_player_piece(empty_board):
 
 def test_add_piece_returns_correct_coord(empty_board):
     actual = empty_board
-    
+
     coords = actual.add_piece(column=0, player_cell=Cell.PLAYER1)
-    assert coords == (0,0)
+    assert coords == (0, 0)
     coords = actual.add_piece(column=1, player_cell=Cell.PLAYER1)
-    assert coords == (1,0)
+    assert coords == (1, 0)
     coords = actual.add_piece(column=1, player_cell=Cell.PLAYER1)
-    assert coords == (1,1)
+    assert coords == (1, 1)
     coords = actual.add_piece(column=1, player_cell=Cell.PLAYER1)
-    assert coords == (1,2)
+    assert coords == (1, 2)
+
 
 def test_is_game_over_vertical(empty_board):
     actual = empty_board
@@ -106,6 +107,127 @@ def test_is_game_over_horizontal(empty_board):
     assert actual.is_game_over(last_move) is True
 
 
+def test_is_game_over_down_left(empty_board):
+    actual = empty_board
+    last_move = actual.add_piece(0, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(1, Cell.PLAYER2)
+    last_move = actual.add_piece(1, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(2, Cell.PLAYER2)
+    last_move = actual.add_piece(2, Cell.PLAYER2)
+    last_move = actual.add_piece(2, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(3, Cell.PLAYER2)
+    last_move = actual.add_piece(3, Cell.PLAYER2)
+    last_move = actual.add_piece(3, Cell.PLAYER2)
+    last_move = actual.add_piece(3, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is True
+    last_move = actual.add_piece(4, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+
+
+def test_is_game_over_down_right(empty_board):
+    actual = empty_board
+    last_move = actual.add_piece(actual.num_cols - 1, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(actual.num_cols - 2, Cell.PLAYER2)
+    last_move = actual.add_piece(actual.num_cols - 2, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(actual.num_cols - 3, Cell.PLAYER2)
+    last_move = actual.add_piece(actual.num_cols - 3, Cell.PLAYER2)
+    last_move = actual.add_piece(actual.num_cols - 3, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(actual.num_cols - 4, Cell.PLAYER2)
+    last_move = actual.add_piece(actual.num_cols - 4, Cell.PLAYER2)
+    last_move = actual.add_piece(actual.num_cols - 4, Cell.PLAYER2)
+    last_move = actual.add_piece(actual.num_cols - 4, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is True
+    last_move = actual.add_piece(4, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+
+
+def test_is_game_over_up_right(empty_board):
+    actual = empty_board
+
+    last_move = actual.add_piece(1, Cell.PLAYER2)
+    last_move = actual.add_piece(1, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(2, Cell.PLAYER2)
+    last_move = actual.add_piece(2, Cell.PLAYER2)
+    last_move = actual.add_piece(2, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(3, Cell.PLAYER2)
+    last_move = actual.add_piece(3, Cell.PLAYER2)
+    last_move = actual.add_piece(3, Cell.PLAYER2)
+    last_move = actual.add_piece(3, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(0, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is True
+    last_move = actual.add_piece(4, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+
+
+def test_is_game_over_up_left(empty_board):
+    actual = empty_board
+    last_move = actual.add_piece(actual.num_cols - 2, Cell.PLAYER2)
+    last_move = actual.add_piece(actual.num_cols - 2, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(actual.num_cols - 3, Cell.PLAYER2)
+    last_move = actual.add_piece(actual.num_cols - 3, Cell.PLAYER2)
+    last_move = actual.add_piece(actual.num_cols - 3, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(actual.num_cols - 4, Cell.PLAYER2)
+    last_move = actual.add_piece(actual.num_cols - 4, Cell.PLAYER2)
+    last_move = actual.add_piece(actual.num_cols - 4, Cell.PLAYER2)
+    last_move = actual.add_piece(actual.num_cols - 4, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(actual.num_cols - 1, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is True
+    last_move = actual.add_piece(4, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+
+
+def test_is_game_over_mid_diag1(empty_board):
+    actual = empty_board
+
+    last_move = actual.add_piece(0, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(1, Cell.PLAYER2)
+    last_move = actual.add_piece(1, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(2, Cell.PLAYER2)
+    last_move = actual.add_piece(2, Cell.PLAYER2)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(3, Cell.PLAYER2)
+    last_move = actual.add_piece(3, Cell.PLAYER2)
+    last_move = actual.add_piece(3, Cell.PLAYER2)
+    last_move = actual.add_piece(3, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(2, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is True
+    last_move = actual.add_piece(4, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+
+def test_is_game_over_mid_diag2(empty_board):
+    actual = empty_board
+    last_move = actual.add_piece(actual.num_cols - 1, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(actual.num_cols - 2, Cell.PLAYER2)
+    last_move = actual.add_piece(actual.num_cols - 2, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(actual.num_cols - 3, Cell.PLAYER2)
+    last_move = actual.add_piece(actual.num_cols - 3, Cell.PLAYER2)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(actual.num_cols - 4, Cell.PLAYER2)
+    last_move = actual.add_piece(actual.num_cols - 4, Cell.PLAYER2)
+    last_move = actual.add_piece(actual.num_cols - 4, Cell.PLAYER2)
+    last_move = actual.add_piece(actual.num_cols - 4, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(actual.num_cols - 3, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is True
+    last_move = actual.add_piece(4, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
 
 # def test_board_printing(self):
 #     board = Board(2, 2)

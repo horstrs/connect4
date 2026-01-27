@@ -27,7 +27,7 @@ def main():
         
         player_move = board.add_piece(player_selection, current_player)
         print(board)
-        if board.is_game_over(player_move):
+        if board.has_player_won(player_move):
             print(f"Game is over! Player {current_player} won!")
             wait_for_input = False
         current_player = next(players)

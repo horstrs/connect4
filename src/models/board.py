@@ -33,36 +33,11 @@ class Board:
         ]
         return board
 
-    def is_column_playable(self, column: int) -> bool:
-        if column < 0 or column >= self.num_cols:
-            return False
-        if self._is_column_full(column):
-            return False
-        return True
-
     def _is_column_full(self, column: int) -> bool:
         top_row = self.board_state[column][-1]
         if top_row == Cell.EMPTY:
             return False
         return True
-
-    def add_piece(self, column: int, player_cell: Cell) -> tuple[int, int]:
-        if not self.is_column_playable(column):
-            raise ValueError("Invalid column")
-        first_empty_row = self.board_state[column].index(Cell.EMPTY)
-        self.board_state[column][first_empty_row] = player_cell
-        return (column, first_empty_row)
-
-    def is_game_over(self, last_move: tuple[int, int]) -> bool:
-        return any(
-            check(last_move)
-            for check in (
-                self._verify_vertical_win,
-                self._verify_horizontal_win,
-                self._verify_diag_1_win,
-                self._verify_diag_2_win,
-            )
-        )
 
     def _verify_vertical_win(self, last_move: tuple[int, int]) -> bool:
         column, row = last_move
@@ -84,7 +59,7 @@ class Board:
             window = [self.board_state[c][row] for c in range(i, i + WINDOW_SIZE)]
             if all(piece == player for piece in window):
                 return True
-        
+
         return False
 
     def _verify_diag_1_win(self, last_move: tuple[int, int]) -> bool:
@@ -124,3 +99,31 @@ class Board:
                 if all(piece == player for piece in window_values):
                     return True
         return False
+
+    def is_column_playable(self, column: int) -> bool:
+        if column < 0 or column >= self.num_cols:
+            return False
+        if self._is_column_full(column):
+            return False
+        return True
+
+    def add_piece(self, column: int, player_cell: Cell) -> tuple[int, int]:
+        if not self.is_column_playable(column):
+            raise ValueError("Invalid column")
+        first_empty_row = self.board_state[column].index(Cell.EMPTY)
+        self.board_state[column][first_empty_row] = player_cell
+        return (column, first_empty_row)
+
+    def has_player_won(self, last_move: tuple[int, int]) -> bool:
+        return any(
+            check(last_move)
+            for check in (
+                self._verify_vertical_win,
+                self._verify_horizontal_win,
+                self._verify_diag_1_win,
+                self._verify_diag_2_win,
+            )
+        )
+
+    def is_tie(self) -> bool:
+        return all([self._is_column_full(column) for column in range(self.num_cols)])

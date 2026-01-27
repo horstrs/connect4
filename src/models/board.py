@@ -71,11 +71,19 @@ class Board:
         if row < NUM_TILES_BELOW:
             return False
         verical_slice = self.board_state[column][row - NUM_TILES_BELOW : row + 1]
-        
+
         return all(piece == player for piece in verical_slice)
 
     def _verify_horizontal_win(self, last_move: tuple[int, int]) -> bool:
-        return False  # PLACEHOLDER
+        column, row = last_move
+        player = self.board_state[column][row]
+        WINDOW_SIZE = 4
+        left = max(0, (column - WINDOW_SIZE - 1))
+        right = min(self.num_cols, column + WINDOW_SIZE)
+        for i in range(left, right - WINDOW_SIZE + 1):
+            window = [self.board_state[c][row] for c in range(i, i + WINDOW_SIZE)]
+            if all(piece == player for piece in window):
+                return True
 
     def _verify_diag1_win(self, last_move: tuple[int, int]) -> bool:
         return False  # PLACEHOLDER

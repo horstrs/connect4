@@ -78,7 +78,7 @@ def test_add_piece_returns_correct_coord(empty_board):
     coords = actual.add_piece(column=1, player_cell=Cell.PLAYER1)
     assert coords == (1,2)
 
-def test_is_game_over(empty_board):
+def test_is_game_over_vertical(empty_board):
     actual = empty_board
     last_move = actual.add_piece(0, Cell.PLAYER1)
     assert actual.is_game_over(last_move) is False
@@ -90,6 +90,22 @@ def test_is_game_over(empty_board):
     assert actual.is_game_over(last_move) is True
     last_move = actual.add_piece(0, Cell.PLAYER1)
     assert actual.is_game_over(last_move) is True
+
+
+def test_is_game_over_horizontal(empty_board):
+    actual = empty_board
+    last_move = actual.add_piece(0, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(1, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(2, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is False
+    last_move = actual.add_piece(3, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is True
+    last_move = actual.add_piece(4, Cell.PLAYER1)
+    assert actual.is_game_over(last_move) is True
+
+
 
 # def test_board_printing(self):
 #     board = Board(2, 2)

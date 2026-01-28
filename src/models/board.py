@@ -46,8 +46,11 @@ class Board:
         if row < NUM_TILES_BELOW:
             return False
         verical_slice = self.board_state[column][row - NUM_TILES_BELOW : row + 1]
-
-        return all(piece == player for piece in verical_slice)
+        if all(piece == player for piece in verical_slice):
+            print(f"Vertical: {verical_slice}")
+            print(last_move)
+            return True
+        return False
 
     def _verify_horizontal_win(self, last_move: tuple[int, int]) -> bool:
         column, row = last_move
@@ -58,6 +61,8 @@ class Board:
         for i in range(left, right - WINDOW_SIZE + 1):
             window = [self.board_state[c][row] for c in range(i, i + WINDOW_SIZE)]
             if all(piece == player for piece in window):
+                print(f"Horizontal: {window}")
+                print(last_move)
                 return True
 
         return False
@@ -78,6 +83,8 @@ class Board:
             ):
                 window_values = [self.board_state[c][r] for c, r in coords]
                 if all(piece == player for piece in window_values):
+                    print(f"Diag 1: {window_values}")
+                    print(last_move)
                     return True
         return False
 
@@ -97,6 +104,8 @@ class Board:
             ):
                 window_values = [self.board_state[c][r] for c, r in coords]
                 if all(piece == player for piece in window_values):
+                    print(f"Diag 2: {window_values}")
+                    print(last_move)
                     return True
         return False
 

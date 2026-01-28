@@ -234,10 +234,10 @@ def test_has_player_won_mid_diag2(empty_board):
 def test_is_tie(full_board, empty_board):
     assert full_board.is_tie() is True
     assert empty_board.is_tie() is False
-    
+
     for _ in range(empty_board.num_rows):
-        empty_board.add_piece(0, Cell.PLAYER1) 
-    
+        empty_board.add_piece(0, Cell.PLAYER1)
+
     assert empty_board.is_tie() is False
 
 

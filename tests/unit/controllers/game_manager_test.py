@@ -1,3 +1,6 @@
+from unittest.mock import MagicMock, patch
+
+
 def test_manager_initialization(manager, view_mock, board_mock, players):
     assert manager.view == view_mock
     assert manager.game_board == board_mock
@@ -47,3 +50,23 @@ def test_handle_turn_game_not_finished(manager):
     manager.game_board.add_piece.assert_called_once()
     manager.game_board.has_player_won.assert_called_once()
     manager.game_board.is_tie.assert_called_once()
+
+
+def test_game_loop(manager):
+    manager._handle_turn = MagicMock(return_value=True)
+    manager.game_loop()
+    manager._handle_turn.assert_called()
+    manager._handle_turn.assert_called_once()
+
+
+def test_game_loop_switches_players_and_continues(manager, board_mock):
+    with patch.object(manager, "_handle_turn") as mock_handle:
+        mock_handle.side_effect = [False, True]
+
+        manager.game_loop()
+
+        assert mock_handle.call_count == 2
+
+        calls = mock_handle.call_args_list
+        assert calls[0].args[0] == manager.player1
+        assert calls[1].args[0] == manager.player2

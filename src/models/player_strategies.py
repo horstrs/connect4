@@ -24,5 +24,8 @@ class HumanStrategy(MoveStrategy):
 class RandomBotStrategy(MoveStrategy):
     def get_move(self, board: Board) -> int:
         time.sleep(0.1)
-        valid_columns = [c for c in range(board.num_cols) if board.is_column_playable(c)]
+        valid_columns = self._find_valid_columns(board)
         return random.choice(valid_columns)
+    
+    def _find_valid_columns(self, board) -> list[int]:
+        return [c for c in range(board.num_cols) if board.is_column_playable(c)]

@@ -3,19 +3,17 @@ from src.config import PLAYERS_CONFIG, CELL_DIVIDER, BOLD, RESET, COLOR_MAPPING
 
 
 class CLIView:
-    def __init__(self):
-        self.player_config = self._load_player_config()
+    def __init__(self, player_config: dict = None, color_mapping: dict = None):
+        base_config = player_config if player_config is not None else PLAYERS_CONFIG
+        self.player_config = self._load_player_config(base_config)
+        self.color_mapping = color_mapping or COLOR_MAPPING
 
-    def _load_player_config(self) -> dict:
-        player_config = PLAYERS_CONFIG.get(Cell.PLAYER1)
-        if not player_config or player_config is None:
-            raise AttributeError(f"Missing configuration for player {Cell.PLAYER1}")
-
-        player_config = PLAYERS_CONFIG.get(Cell.PLAYER2)
-        if not player_config or player_config is None:
-            raise AttributeError(f"Missing configuration for player {Cell.PLAYER2}")
-
-        return PLAYERS_CONFIG
+    def _load_player_config(self, config: dict) -> dict:
+        # Ensure both players exist in whatever config was passed
+        for player in [Cell.PLAYER1, Cell.PLAYER2]:
+            if player.value not in config:
+                raise AttributeError(f"Missing configuration for player {player}")
+        return config
 
     def _convert_cell_data_to_player_config(self, cell_data: int) -> str:
         if cell_data == Cell.EMPTY.value:
@@ -33,12 +31,9 @@ class CLIView:
         return f"{bg_ansi}   {RESET}"
 
     def _get_player_ansi_color(self, player_id: int) -> str:
-        if player_id == Cell.EMPTY.value:
-            return ""
-        current_player_config = self.player_config.get(player_id)
-        color_name = current_player_config.get("COLOR")
-        ansi_code = COLOR_MAPPING.get(color_name, "")
-        return ansi_code
+        config = self.player_config.get(player_id, {})
+        color_name = config.get("COLOR")
+        return COLOR_MAPPING.get(color_name, "")
 
     def print_board(self, board_state: list[list[Cell]]) -> str:
         rows = []
@@ -57,7 +52,7 @@ class CLIView:
 
     def get_user_input(self, player_name: str) -> int:
         print(f"\n{player_name}'s turn.")
-        val = input("Select a column to play:")
+        val = input("Select a column to play: ")
         try:
             return int(val)
         except ValueError:

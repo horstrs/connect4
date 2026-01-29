@@ -11,6 +11,7 @@ dependencies = [
 
 [project.scripts]
 play = "src.main:main"
+cache_cov = "pytest --cache-clear --cov=src"
 
 [tool.pytest.ini_options]
 pythonpath = ["."]

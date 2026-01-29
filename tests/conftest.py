@@ -7,6 +7,7 @@ from src.controllers.game_manager import GameManager
 from src.models.board import Board, Cell
 from src.models.player import Player
 from src.models.player_strategies import HumanStrategy, RandomBotStrategy
+from src.views.cli_view import CLIView
 
 
 @pytest.fixture
@@ -76,7 +77,27 @@ def board_to_win(empty_board):
     return almost_won_board
 
 
-# @pytest.fixture
-# def ai_player():
-#     """Returns a standard AI player instance."""
-#     return Player(player_id=2, name="Robo", move_strategy=RandomAIStrategy())
+@pytest.fixture
+def fake_color_mapping():
+    return {
+        "red": "\033[31m",
+        "yellow": "\033[33m",
+        "bg_red": "\033[41m",
+        "bg_yellow": "\033[43m",
+        "reset": "\033[0m",
+        "bold": "\033[1m",
+    }
+
+
+@pytest.fixture
+def fake_player_config():
+    return {
+        Cell.PLAYER1.value: {"COLOR": "red", "SHAPE": "X"},
+        Cell.PLAYER2.value: {"COLOR": "yellow", "SHAPE": ""},
+    }
+
+
+@pytest.fixture
+def view(fake_player_config, fake_color_mapping):
+    # We pass the fake configs into the View
+    return CLIView(player_config=fake_player_config, color_mapping=fake_color_mapping)

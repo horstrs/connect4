@@ -23,8 +23,10 @@ class GameManager:
 
         board_coord = self.game_board.add_piece(next_move, current_player.id)
         if self.game_board.has_player_won(board_coord):
-            self.view.print_game_over_screen(f"Game Over! {current_player.name} has won", current_player.id)
-            
+            self.view.print_game_over_screen(
+                f"Game Over! {current_player.name} has won", current_player.id
+            )
+
             game_ended = True
             return game_ended
         if self.game_board.is_tie():

@@ -50,8 +50,6 @@ def board_mock():
 
 @pytest.fixture
 def players():
-    # p1 = Player(Cell.PLAYER1, "P1", HumanStrategy())
-    # p2 = Player(Cell.PLAYER2, "P2", RandomBotStrategy())
     p1 = MagicMock()
     p2 = MagicMock()
     return [p1, p2]

@@ -1,6 +1,6 @@
-from src.models.match_factory import MatchFactory
-from src.controllers.game_manager import GameManager
-from src.views.cli_view import CLIView
+from models.match_factory import MatchFactory
+from controllers.game_manager import GameManager
+from views.cli_view import CLIView
 
 
 def main():

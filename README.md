@@ -2,7 +2,7 @@
 For both commands below you'll. need to start virtual env first:
 `source .venv/bin/activate`
 
-* How to run the Game: `uv run python -m src.main`
+* How to run the Game: `uv run python src`
 
 * Tests: `uv run pytest`
 

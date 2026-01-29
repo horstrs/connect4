@@ -1,5 +1,5 @@
-from src.models.board import Cell
-from src.config import PLAYERS_CONFIG, CELL_DIVIDER, BOLD, RESET, COLOR_MAPPING, UNDERLINE
+from models.board import Cell
+from config import PLAYERS_CONFIG, CELL_DIVIDER, BOLD, RESET, COLOR_MAPPING, UNDERLINE
 
 
 class CLIView:

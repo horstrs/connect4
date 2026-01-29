@@ -30,7 +30,6 @@ def test_convert_cell_data_to_player_config(view):
     rendered_bg = view._convert_cell_data_to_player_config(Cell.PLAYER2.value)
     assert "X" not in rendered_bg
     assert "\033[43m" in rendered_bg
-    
 
 
 def test_print_board_layout(view, capsys):

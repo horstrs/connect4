@@ -1,32 +1,5 @@
 from src.models.board import Cell
-from src.config import PLAYERS_CONFIG, CELL_DIVIDER
-
-
-COLOR_CODES = {
-    "empty": {},
-    "foreground": {
-        "black": "\033[30m",
-        "red": "\033[31m",
-        "green": "\033[32m",
-        "yellow": "\033[33m",
-        "blue": "\033[34m",
-        "magenta": "\033[35m",
-        "cyan": "\033[36m",
-        "white": "\033[37m",
-    },
-    "background": {
-        "black": "\033[40m",
-        "red": "\033[41m",
-        "green": "\033[42m",
-        "yellow": "\033[43m",
-        "blue": "\033[44m",
-        "magenta": "\033[45m",
-        "cyan": "\033[46m",
-        "white": "\033[47m",
-    },
-}
-BOLD = "\033[1m"
-RESET = "\033[0m"
+from src.config import PLAYERS_CONFIG, CELL_DIVIDER, BOLD, RESET, COLOR_MAPPING
 
 
 class CLIView:
@@ -41,15 +14,15 @@ class CLIView:
         if not player_config or player_config is None:
             raise AttributeError(f"Missing configuration for player {cell_data}")
 
-        if player_config["SHAPE"] and player_config["SHAPE"] != "":
-            return (
-                BOLD
-                + COLOR_CODES["foreground"][player_config["COLOR"]]
-                + f" {player_config['SHAPE'].upper()} "
-                + RESET
-            )
+        color_name = player_config.get("COLOR")
+        ansi_code = COLOR_MAPPING.get(color_name, "")
+        shape = player_config.get("SHAPE", " ").upper()
 
-        return COLOR_CODES["background"][player_config["COLOR"]] + "   " + RESET
+        if shape.strip():
+            return f"{BOLD}{ansi_code} {shape} {RESET}"
+        
+        bg_ansi = COLOR_MAPPING.get(f"bg_{color_name}", ansi_code)
+        return f"{bg_ansi}   {RESET}"
 
     def print_board(self, board_state: list[list[Cell]]) -> str:
         rows = []
@@ -62,8 +35,9 @@ class CLIView:
                 f"{CELL_DIVIDER}" + f"{CELL_DIVIDER}".join(row_data) + f"{CELL_DIVIDER}"
             )
         floor = "-" * (len(board_state) * 4 + 1)
+        head_foot = "  " + "   ".join([str(i) for i in range(len(board_state))])
         board = "\n".join(rows) + "\n" + floor
-        print(board)
+        print("\n" + head_foot + "\n" + board + "\n" + head_foot)
 
     def get_user_input(self):  # TODO: Change implementation to get input from user
         print("Select a column to play:")

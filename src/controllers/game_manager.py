@@ -44,10 +44,7 @@ class GameManager:
 
         while not game_ended:
             current_player = next(self.players_iterator)
-            # self.view.render_board(self.game_board) #TODO: Implemente board rendering in view
-            # print(self.game_board)
             self.view.print_board(self.game_board.board_state)
             game_ended = self._handle_turn(current_player)
 
-        # self.view.render_board(self.game_board) #TODO: Implemente board rendering in view
         self.view.print_board(self.game_board.board_state)

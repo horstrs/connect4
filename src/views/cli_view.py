@@ -1,5 +1,5 @@
 from src.models.board import Cell
-from src.config import PLAYERS_CONFIG, CELL_DIVIDER, BOLD, RESET, COLOR_MAPPING
+from src.config import PLAYERS_CONFIG, CELL_DIVIDER, BOLD, RESET, COLOR_MAPPING, UNDERLINE
 
 
 class CLIView:
@@ -25,7 +25,7 @@ class CLIView:
         shape = current_player_config.get("SHAPE", " ").upper()
 
         if shape.strip():
-            return f"{BOLD}{ansi_code} {shape} {RESET}"
+            return f"{BOLD}{UNDERLINE}{ansi_code} {shape} {RESET}"
 
         bg_ansi = COLOR_MAPPING.get(f"bg_{color_name}", ansi_code)
         return f"{bg_ansi}   {RESET}"
@@ -43,7 +43,7 @@ class CLIView:
                 for c in range(len(board_state))
             ]
             rows.append(
-                f"{CELL_DIVIDER}" + f"{CELL_DIVIDER}".join(row_data) + f"{CELL_DIVIDER}"
+                f"{UNDERLINE}{CELL_DIVIDER}" + f"{UNDERLINE}{CELL_DIVIDER}".join(row_data) + f"{UNDERLINE}{CELL_DIVIDER}{RESET}"
             )
         floor = "-" * (len(board_state) * 4 + 1)
         head_foot = "  " + "   ".join([str(i) for i in range(len(board_state))])

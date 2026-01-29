@@ -6,7 +6,7 @@ from unittest.mock import MagicMock
 from src.controllers.game_manager import GameManager
 from src.models.board import Board, Cell
 from src.models.player import Player
-from src.models.player_strategies import HumanStrategy, RandomBotStrategy
+from src.models.player_strategies import HumanStrategy
 from src.views.cli_view import CLIView
 
 
@@ -99,5 +99,4 @@ def fake_player_config():
 
 @pytest.fixture
 def view(fake_player_config, fake_color_mapping):
-    # We pass the fake configs into the View
     return CLIView(player_config=fake_player_config, color_mapping=fake_color_mapping)

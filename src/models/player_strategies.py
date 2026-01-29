@@ -2,7 +2,7 @@ import random
 import time
 
 from abc import ABC, abstractmethod
-from models.board import Board
+from src.models.board import Board
 
 class MoveStrategy(ABC):
     @abstractmethod

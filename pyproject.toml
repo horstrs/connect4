@@ -1,7 +1,7 @@
 [project]
 name = "connect4"
 version = "0.1.0"
-description = "Add your description here"
+description = "Basic CLI version of Connect4"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
@@ -11,9 +11,17 @@ dependencies = [
 
 [project.scripts]
 play = "src.main:main"
-start = "src.main:main"
-cache_cov = "pytest --cache-clear --cov=src"
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]
+
+[tool.uv]
+package = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

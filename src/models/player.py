@@ -1,4 +1,4 @@
-from models.player_strategies import MoveStrategy, HumanStrategy
+from src.models.player_strategies import MoveStrategy, HumanStrategy
 
 class Player:
     def __init__(self, id: int, name: str, move_strategy: MoveStrategy):

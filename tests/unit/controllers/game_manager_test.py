@@ -1,5 +1,5 @@
 from unittest.mock import MagicMock, patch
-from models.player import Player
+from src.models.player import Player
 
 def test_manager_initialization(manager, view_mock, board_mock, players):
     assert manager.view == view_mock

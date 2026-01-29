@@ -1,10 +1,11 @@
-# How to run (for now):
+# How to run:
 For both commands below you'll. need to start virtual env first:
 `source .venv/bin/activate`
 
-* How to run the Game: `uv run python src`
+* How to run the Game: `uv run play`
 
 * Tests: `uv run pytest`
+** Clearing cache for tests: cache_cov = `pytest --cache-clear --cov=src`
 
 # GameManager class (Controller):
 
@@ -24,8 +25,11 @@ Contains the player id, player name and the move strategy.
 
 This class has a `get_move(board)` method, that should use the `move_strategy` instance to decide the next move. 
 
-For now, we'll only have a `HumanStrategy` implementation for `move_strategy` and it will return a Signal (just a constant) informing the controller that an user input is required.
-Each AI strategy we implement will be a different implementation of this strategy and the calculate_move.
+The move strategies currently implemented are:
+* `HumanStrategy`: It's implementation of get_move() should never be directly called, since the controller is supposed to get the move from the view by asking the human player for input. So it just raises an error to make sure it's not called.
+
+* `RandomBotStrategy`: It gets a list of columns available and choses randomly one of them
+
 
 # Board class:
 
@@ -45,4 +49,17 @@ The methods needed for the board class are:
 
 # View Class
 
-Still to be defined
+The CLI print implementation is done here. It receives a config dictionary that maps the color and shape chosen by each player. The shape and color will be used when printting the board in the CLI.
+If no shape is chosen, then the full color is printed as background instead.
+The view is also responsible for getting the input from a human player. If the player enters a value that's not a column, it will inform it's an incorrect value and ask for input again.
+
+Next steps for view:
+* New game menu, where player can choose:
+    * Type of match (PVP, PVE or EVE)
+    * If match agains bot (PVE or EVE), then player can choose bot types once other move strategies are implemented
+    * Config changes - so player doesn't have to change config files manually
+    * Exit game
+
+* End game screen, where player can choose to play again against the same opponent or go back to main screen or exit game
+
+* Update ingame screen with round number

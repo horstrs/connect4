@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock
-from models.player import Player
-from models.player_strategies import HumanStrategy, RandomBotStrategy
+from src.models.player import Player
+from src.models.player_strategies import HumanStrategy, RandomBotStrategy
 
 def test_player_delegates_to_strategy():
     mock_strategy = MagicMock()

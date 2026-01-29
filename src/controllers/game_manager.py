@@ -12,12 +12,12 @@ class GameManager:
         self.player2 = players[1]
         self.players_iterator = cycle([self.player1, self.player2])
 
-    def _handle_turn(self, current_player):
+    def _handle_turn(self, current_player: Player):
         game_ended = False
-        next_move = self.view.get_input()
+        next_move = self._get_move(current_player)
         while not self.game_board.is_column_playable(next_move):
             print("invalid move")  # TODO: Implement print in view class
-            next_move = self.view.get_input()  # TODO: Implement get_input in view class
+            next_move = self._get_move(current_player)
 
         board_coord = self.game_board.add_piece(next_move, current_player.id)
         if self.game_board.has_player_won(board_coord):
@@ -33,14 +33,21 @@ class GameManager:
 
         return game_ended
 
+    def _get_move(self, current_player: Player):
+        if current_player.is_human():
+            return self.view.get_user_input()
+        else:
+            return current_player.get_move(self.game_board)
+
     def game_loop(self):
         game_ended = False
 
         while not game_ended:
             current_player = next(self.players_iterator)
             # self.view.render_board(self.game_board) #TODO: Implemente board rendering in view
-            print(self.game_board)
+            # print(self.game_board)
+            self.view.print_board(self.game_board.board_state)
             game_ended = self._handle_turn(current_player)
 
         # self.view.render_board(self.game_board) #TODO: Implemente board rendering in view
-        print(self.game_board)
+        self.view.print_board(self.game_board.board_state)

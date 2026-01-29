@@ -6,7 +6,7 @@ from unittest.mock import MagicMock
 from src.controllers.game_manager import GameManager
 from src.models.board import Board, Cell
 from src.models.player import Player
-from src.models.player_strategies import HumanStrategy  # , RandomAIStrategy
+from src.models.player_strategies import HumanStrategy, RandomBotStrategy
 
 
 @pytest.fixture
@@ -50,8 +50,10 @@ def board_mock():
 
 @pytest.fixture
 def players():
-    p1 = Player(Cell.PLAYER1, "P1", HumanStrategy)
-    p2 = Player(Cell.PLAYER2, "P2", HumanStrategy)
+    # p1 = Player(Cell.PLAYER1, "P1", HumanStrategy())
+    # p2 = Player(Cell.PLAYER2, "P2", RandomBotStrategy())
+    p1 = MagicMock()
+    p2 = MagicMock()
     return [p1, p2]
 
 

@@ -27,7 +27,7 @@ class Board:
     def __repr__(self):
         return f"Board({self.num_cols}x{self.num_rows})\n{self.__str__()}"
 
-    def _initialize_board_state(self):
+    def _initialize_board_state(self) -> list[list[Cell]]:
         board = [
             [Cell.EMPTY for _ in range(self.num_rows)] for _ in range(self.num_cols)
         ]

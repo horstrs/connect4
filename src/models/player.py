@@ -1,4 +1,4 @@
-from src.models.player_strategies import MoveStrategy
+from src.models.player_strategies import MoveStrategy, HumanStrategy
 
 class Player:
     def __init__(self, id: int, name: str, move_strategy: MoveStrategy):
@@ -9,3 +9,6 @@ class Player:
 
     def get_move(self, board) -> int | str:
         return self.move_strategy.get_move(board)
+    
+    def is_human(self) -> bool:
+        return isinstance(self.move_strategy, HumanStrategy)

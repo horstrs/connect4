@@ -60,7 +60,7 @@ Check coverage:
 pytest --cov=src --cov-report=term-missing
 ```
 
-## 🛠 Configuration (to be changed)
+## 🛠 Configuration
 You can change player colors and symbols in src/config.py without touching the game logic.
 
 ```Python
@@ -70,4 +70,4 @@ PLAYERS_CONFIG = {
     2: {"COLOR": "yellow", "SHAPE": "O"}
 } 
 ```
-Once configuration screen is added, this section will be updated
+

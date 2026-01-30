@@ -1,65 +1,73 @@
-# How to run:
-For both commands below you'll. need to start virtual env first:
-`source .venv/bin/activate`
+# Connect 4 CLI
 
-* How to run the Game: `uv run play`
+A Python implementation of Connect 4 featuring a decoupled MVC architecture and a customizable CLI View.
 
-* Tests: `uv run pytest`
-    * Clearing cache for tests: `pytest --cache-clear --cov=src`
+:dart: **Short term goal of the project was to practice:**
 
-# GameManager class (Controller):
+* :building_construction: Architecture skills by creating a decoupled MVC architecture
+* :test_tube: Learn testing in python, and validate how decoupled the original architecture was by how many changes I had to make to implementing unit tests
 
-1. Start new game, instantiate an empty board and player 1 and player 2.
-Here is the start of the game loop:
-1. Use View to ask for user input and capture it
-1. Input (View): The View captures the raw input, validate if format is correct (e.g., transform column "A" to index 0, or make sure that user didn't enter invalid info, like "random_string") and passes it back to the Controller.
-1. Validation against game logic (Controller): The Controller asks the Model if that column is playable. If not, go back to step 2. If it is, proceed.
-1. Update (Model): The Controller tells the Model to drop a piece. The Model updates its internal state and returns the result (a tuple with the (col, row) coordinate of the move).
-1. Render (View): The Controller sends the updated board data to the View to be printed.
-1. Win/Tie Check (Model): The Controller asks the Model if the last move triggered a win. If not, check if it's a draw. If either has happened, ask the view to print end of game screen. Otherwise, go back to first game loop step
+:books: **Mid/Long term goal of the project is to:**
 
-Note: The View never asks the Model for data; the Controller acts as the middleman.
-
-# Player class:
-Contains the player id, player name and the move strategy.
-
-This class has a `get_move(board)` method, that should use the `move_strategy` instance to decide the next move. 
-
-The move strategies currently implemented are:
-* `HumanStrategy`: It's implementation of get_move() should never be directly called, since the controller is supposed to get the move from the view by asking the human player for input. So it just raises an error to make sure it's not called.
-
-* `RandomBotStrategy`: It gets a list of columns available and choses randomly one of them
+* :robot: Learn/Practice implementation of more complex AI algorithms like minimax and their optimizations
+* :scissors: For Alpha-Beta pruning, the creation of a score heuristic will be fun to do
+* :brain: Learn implementation of Machine Learning algorithms for AI player, like neural networks
+* :globe_with_meridians: Since back-end architecture is decoupled, this can serve as a basis for a future webserver project
 
 
-# Board class:
 
-The board should contain the number of rows and columns and a living board state, that's initialized in the constructor.
-The `board_state` is just a list of lists, where the outter list represents the columns and the inner list represents the lines. And each cell would contain either 0 for empty cells, or 1 or 2 representing player 1 and player 2, respectively.
+## 🚀 Setup
 
-The methods needed for the board class are:
+1. **Install UV:**
 
-* Is_column_playable -> Receives a column indexes and if the index exists and is not yet full return True. Otherwise, return false
+    https://docs.astral.sh/uv/getting-started/installation/
 
-* Add piece -> Receives a playable column and the current player. Adds the player id to the board state representation.
 
-* Is_game_over -> Doesn't receive any parameter, just checks in the current game state if there was winner player or if the game is a tie.
+2. **Clone the repository:**
+   ```bash
+   git clone <https://github.com/horstrs/connect4>
+   cd connect4_project
+   ```
 
-    * Definition for a winner player: A player that connects 4 of its pieces, uninterrupted, in a horizontal, vertical or diagonal line
-    * Definition for a tie: Top cell for all columns are filled
+3. **Install dependencies:**
+    ```bash
+    uv sync
+    ```
 
-# View Class
+Alternatively, if wnat to just run it once, you can use uvx to replace steps 2 and 3 above with this:
 
-The CLI print implementation is done here. It receives a config dictionary that maps the color and shape chosen by each player. The shape and color will be used when printting the board in the CLI.
-If no shape is chosen, then the full color is printed as background instead.
-The view is also responsible for getting the input from a human player. If the player enters a value that's not a column, it will inform it's an incorrect value and ask for input again.
+2. **Run using uvx:**
+    ```bash
+    uvx --from git+https://github.com/horstrs/connect4 play
+    ```
 
-Next steps for view:
-* New game menu, where player can choose:
-    * Type of match (PVP, PVE or EVE)
-    * If match agains bot (PVE or EVE), then player can choose bot types once other move strategies are implemented
-    * Config changes - so player doesn't have to change config files manually
-    * Exit game
+## 🎮 How to Play
+Run the game from the root directory:
 
-* End game screen, where player can choose to play again against the same opponent or go back to main screen or exit game
+```bash
+uv run play
+```
 
-* Update ingame screen with round number
+## 🧪 Testing & Coverage
+Run tests:
+
+``` bash
+pytest
+```
+
+Check coverage:
+```bash
+pytest --cov=src --cov-report=term-missing
+```
+
+## 🛠 Configuration (to be changed)
+You can change player colors and symbols in src/config.py without touching the game logic.
+
+```Python
+# Change "red" to "blue" or "X" to "P"
+PLAYERS_CONFIG = {
+    1: {"COLOR": "red", "SHAPE": "X"},
+    2: {"COLOR": "yellow", "SHAPE": "O"}
+} 
+```
+Once configuration screen is added, this section will be updated

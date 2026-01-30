@@ -1,6 +1,6 @@
-from src.models.board import Board, Cell
-from src.models.player import Player
-from src.models.player_strategies import HumanStrategy, RandomBotStrategy
+from connect4.models.board import Board, Cell
+from connect4.models.player import Player
+from connect4.models.player_strategies import HumanStrategy, RandomBotStrategy
 
 
 class MatchFactory:

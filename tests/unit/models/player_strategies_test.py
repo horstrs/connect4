@@ -1,5 +1,5 @@
 from unittest.mock import MagicMock
-from src.models.player_strategies import HumanStrategy, RandomBotStrategy
+from connect4.models.player_strategies import HumanStrategy, RandomBotStrategy
 
 
 def test_human_strategy_get_move():

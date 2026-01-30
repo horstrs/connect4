@@ -5,12 +5,14 @@ description = "Basic CLI version of Connect4"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "coverage>=7.13.2",
+    "mutmut>=3.4.0",
     "pytest>=9.0.2",
     "pytest-cov>=7.0.0",
 ]
 
 [project.scripts]
-play = "src.main:main"
+play = "connect4.main:main"
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
@@ -20,8 +22,13 @@ testpaths = ["tests"]
 package = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src"]
+packages = ["src/connect4"]
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.mutmut]
+paths_to_mutate = ["src/connect4/"]
+runner = "python -m pytest"
+mutate_only_covered_lines = true

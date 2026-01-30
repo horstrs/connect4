@@ -1,7 +1,7 @@
-from src.models.match_factory import MatchFactory
-from src.models.board import Board
-from src.models.player import Player
-from src.models.player_strategies import HumanStrategy, RandomBotStrategy
+from connect4.models.match_factory import MatchFactory
+from connect4.models.board import Board
+from connect4.models.player import Player
+from connect4.models.player_strategies import HumanStrategy, RandomBotStrategy
 
 def test_setup_classic_pvp():
     

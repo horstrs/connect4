@@ -1,7 +1,7 @@
 import pytest
 
-from src.views.cli_view import CLIView
-from src.models.board import Cell
+from connect4.views.cli_view import CLIView
+from connect4.models.board import Cell
 
 
 def test_view_initialization_fails_with_missing_config():

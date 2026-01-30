@@ -1,7 +1,7 @@
 import pytest
 import random
 
-from src.models.board import Cell
+from connect4.models.board import Cell
 
 
 def test_board_initialization(empty_board):

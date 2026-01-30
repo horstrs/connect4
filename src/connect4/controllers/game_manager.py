@@ -1,7 +1,7 @@
 from itertools import cycle
-from src.models.board import Board
-from src.models.player import Player
-from src.views.cli_view import CLIView
+from connect4.models.board import Board
+from connect4.models.player import Player
+from connect4.views.cli_view import CLIView
 
 
 class GameManager:

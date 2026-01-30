@@ -3,11 +3,11 @@ import copy
 
 from itertools import cycle
 from unittest.mock import MagicMock
-from src.controllers.game_manager import GameManager
-from src.models.board import Board, Cell
-from src.models.player import Player
-from src.models.player_strategies import HumanStrategy
-from src.views.cli_view import CLIView
+from connect4.controllers.game_manager import GameManager
+from connect4.models.board import Board, Cell
+from connect4.models.player import Player
+from connect4.models.player_strategies import HumanStrategy
+from connect4.views.cli_view import CLIView
 
 
 @pytest.fixture

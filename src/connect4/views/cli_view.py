@@ -1,7 +1,7 @@
 import os
 
-from src.models.board import Cell
-from src.config import (
+from connect4.models.board import Cell
+from connect4.config import (
     PLAYERS_CONFIG,
     CELL_DIVIDER,
     BOLD,
@@ -29,7 +29,7 @@ class CLIView:
             return "   "
 
         current_player_config = self.player_config.get(cell_data)
-        color_name = current_player_config.get("COLOR").lower()
+        color_name = current_player_config.get("COLOR", "").lower()
         ansi_code = COLOR_MAPPING.get(color_name, "")
         shape = current_player_config.get("SHAPE", " ").upper()
 
@@ -41,7 +41,7 @@ class CLIView:
 
     def _get_player_ansi_color(self, player_id: int) -> str:
         config = self.player_config.get(player_id, {})
-        color_name = config.get("COLOR").lower()
+        color_name = config.get("COLOR", "").lower()
         return COLOR_MAPPING.get(color_name, "")
 
     def print_board(self, board_state: list[list[Cell]]) -> str:

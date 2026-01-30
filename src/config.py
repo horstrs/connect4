@@ -4,8 +4,8 @@ CELL_DIVIDER = "|"
 STARTING_PLAYER = 1
 
 PLAYERS_CONFIG = {
-    1: {"COLOR": "Yellow", "SHAPE": ""},
-    2: {"COLOR": "Red", "SHAPE": ""},
+    1: {"COLOR": "yellow", "SHAPE": ""},
+    2: {"COLOR": "red", "SHAPE": ""},
 }
 
 COLOR_MAPPING = {

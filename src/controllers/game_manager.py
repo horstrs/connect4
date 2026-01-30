@@ -15,11 +15,12 @@ class GameManager:
     def _handle_turn(self, current_player: Player):
         game_ended = False
         next_move = self._get_move(current_player)
+        self.view.clear_screen()
         while not self.game_board.is_column_playable(next_move):
-            self.view.print_error_message("invalid move")
+            self.view.print_error_message(f"{next_move} is an invalid move")
             self.view.print_board(self.game_board.board_state)
-
             next_move = self._get_move(current_player)
+            self.view.clear_screen()
 
         board_coord = self.game_board.add_piece(next_move, current_player.id)
         if self.game_board.has_player_won(board_coord):

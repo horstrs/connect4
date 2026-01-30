@@ -1,5 +1,14 @@
+import os
+
 from src.models.board import Cell
-from src.config import PLAYERS_CONFIG, CELL_DIVIDER, BOLD, RESET, COLOR_MAPPING, UNDERLINE
+from src.config import (
+    PLAYERS_CONFIG,
+    CELL_DIVIDER,
+    BOLD,
+    RESET,
+    COLOR_MAPPING,
+    UNDERLINE,
+)
 
 
 class CLIView:
@@ -43,7 +52,9 @@ class CLIView:
                 for c in range(len(board_state))
             ]
             rows.append(
-                f"{UNDERLINE}{CELL_DIVIDER}" + f"{UNDERLINE}{CELL_DIVIDER}".join(row_data) + f"{UNDERLINE}{CELL_DIVIDER}{RESET}"
+                f"{UNDERLINE}{CELL_DIVIDER}"
+                + f"{UNDERLINE}{CELL_DIVIDER}".join(row_data)
+                + f"{UNDERLINE}{CELL_DIVIDER}{RESET}"
             )
         floor = "-" * (len(board_state) * 4 + 1)
         head_foot = "  " + "   ".join([str(i) for i in range(len(board_state))])
@@ -52,7 +63,7 @@ class CLIView:
 
     def get_user_input(self, player_name: str) -> int:
         print(f"\n{player_name}'s turn.")
-        val = input("Select a column to play: ")
+        val = input("\nSelect a column to play: ")
         try:
             return int(val)
         except ValueError:
@@ -64,4 +75,10 @@ class CLIView:
 
     def print_game_over_screen(self, message: str, player_id: int = 0) -> None:
         ansi_color = self._get_player_ansi_color(player_id)
-        print(f"{ansi_color}{message}{RESET}")
+        print(f"\n{ansi_color}{message}{RESET}")
+
+    def clear_screen(self):
+        if os.name == "nt":
+            _ = os.system("cls")
+        else:
+            _ = os.system("clear")

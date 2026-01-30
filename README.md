@@ -5,7 +5,7 @@ For both commands below you'll. need to start virtual env first:
 * How to run the Game: `uv run play`
 
 * Tests: `uv run pytest`
-** Clearing cache for tests: cache_cov = `pytest --cache-clear --cov=src`
+    * Clearing cache for tests: `pytest --cache-clear --cov=src`
 
 # GameManager class (Controller):
 
